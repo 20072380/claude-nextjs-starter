@@ -126,6 +126,8 @@
   }
   html {
     @apply font-sans;
+    /* 스크롤바 유무와 관계없이 가로폭을 고정해 라우트 전환 시 레이아웃이 흔들리지 않게 한다. */
+    scrollbar-gutter: stable;
   }
 }
 /* 예제 코드 블록(shiki 듀얼 테마): 라이트/다크 색상을 CSS 변수로 전환한다. */

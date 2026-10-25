@@ -29,6 +29,8 @@ export async function generateMetadata({
 }
 
 // 카테고리 콘텐츠를 불러오는 동안 보여줄 자리표시자(App Shell에 포함된다).
+// 실제 콘텐츠(헤더 + 예제 카드 여러 개 + 하단 이동 nav)와 비슷한 높이로 구성해
+// 콘텐츠로 교체될 때 레이아웃 시프트가 생기지 않도록 한다.
 function CategorySkeleton() {
   return (
     <div className="space-y-10">
@@ -36,7 +38,19 @@ function CategorySkeleton() {
         <Skeleton className="h-8 w-48" />
         <Skeleton className="h-5 w-80 max-w-full" />
       </div>
-      <Skeleton className="h-64 w-full" />
+      {Array.from({ length: 3 }, (_, index) => (
+        <div key={index} className="space-y-3">
+          <div className="space-y-1">
+            <Skeleton className="h-7 w-40" />
+            <Skeleton className="h-5 w-64 max-w-full" />
+          </div>
+          <Skeleton className="h-9 w-40" />
+          <Skeleton className="h-48 w-full" />
+        </div>
+      ))}
+      <div className="border-t pt-6">
+        <Skeleton className="h-5 w-full" />
+      </div>
     </div>
   );
 }

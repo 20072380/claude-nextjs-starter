@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ai tools (로컬 캐시·로그·스냅샷)
+/.serena/
+/.playwright-mcp/

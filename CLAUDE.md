@@ -15,6 +15,12 @@ npm run lint    # ESLint (eslint-config-next)
 
 새 패키지 설치 시 `ERESOLVE` 오류가 나면 `--legacy-peer-deps`를 붙입니다(`@hookform/resolvers`의 선택적 peer 의존성 문제).
 
+## 작업 워크플로
+
+코드 구현(기능 추가, 버그 수정, 리팩터링, 예제/컴포넌트 추가)을 마치면 **커밋 전에 `code-reviewer` 서브에이전트(`.claude/agents/code-reviewer.md`)를 실행**해 변경사항을 리뷰받습니다. 문서/설정만 바꾼 경우는 생략할 수 있습니다. 리뷰에서 나온 "필수 수정" 항목은 반영한 뒤 마무리하고, 리뷰어는 코드를 직접 고치지 않으므로 수정은 메인 에이전트가 합니다.
+
+`code-reviewer` 다음에 UI 변경(페이지, 레이아웃, 컴포넌트, 예제)이 있으면 `ui-verifier` 서브에이전트(`.claude/agents/ui-verifier.md`)를 실행해 라이트/다크, 모바일/데스크톱 화면과 콘솔 에러를 확인합니다. 이 에이전트도 코드를 직접 고치지 않으며, 지적 사항의 수정은 메인 에이전트가 합니다.
+
 ## Next.js 16 주의사항
 
 `AGENTS.md`의 지침대로, 이 버전은 기존 지식과 다릅니다. 코드를 쓰기 전에 `node_modules/next/dist/docs/`의 관련 가이드를 확인하세요. 이 프로젝트에서 특히 중요한 점:

@@ -50,14 +50,16 @@ export default function RhfZodFormExample() {
     defaultValues: { name: "", email: "", type: "", message: "", agree: false },
   });
 
-  async function onSubmit(values: InquiryValues) {
+  async function onSubmit() {
     try {
-      // TODO: Server Action 또는 API 호출로 교체한다.
-      console.info("문의 접수", values);
+      // TODO: 실제 전송 로직으로 교체한다. 예: onSubmit(values: InquiryValues)로 값을 받아
+      // await submitInquiry(values) (Server Action 또는 API 호출)
       toast.success("문의가 접수되었습니다.");
       form.reset();
     } catch (error) {
       console.error("문의 접수 실패", error);
+      // 서버 에러는 폼 하단에 표시하고 토스트로도 알린다.
+      form.setError("root", { message: "문의를 접수하지 못했습니다." });
       toast.error("접수에 실패했습니다. 잠시 후 다시 시도해 주세요.");
     }
   }
@@ -111,7 +113,7 @@ export default function RhfZodFormExample() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>문의 유형</FieldLabel>
+              <FieldLabel htmlFor="inquiry-type">문의 유형</FieldLabel>
               {/* 선택 전에는 null을 넘겨 placeholder를 표시한다. */}
               <Select
                 items={inquiryTypes}
@@ -119,6 +121,7 @@ export default function RhfZodFormExample() {
                 onValueChange={(value) => field.onChange(value ?? "")}
               >
                 <SelectTrigger
+                  id="inquiry-type"
                   className="w-full"
                   aria-invalid={fieldState.invalid}
                 >
@@ -166,6 +169,7 @@ export default function RhfZodFormExample() {
                 <Checkbox
                   checked={field.value}
                   onCheckedChange={field.onChange}
+                  aria-invalid={fieldState.invalid}
                 />
                 개인정보 수집 및 이용에 동의합니다
               </Label>
@@ -175,6 +179,9 @@ export default function RhfZodFormExample() {
             </Field>
           )}
         />
+        {form.formState.errors.root ? (
+          <FieldError errors={[form.formState.errors.root]} />
+        ) : null}
         <Button type="submit" disabled={form.formState.isSubmitting}>
           {form.formState.isSubmitting ? <Spinner /> : null}
           문의하기

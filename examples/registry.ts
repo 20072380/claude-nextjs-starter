@@ -59,6 +59,14 @@ export type ExampleMeta = {
   liveHref?: string;
 };
 
+// 실제 경로로 확인하는 화면: 예제의 liveHref와 /examples 목차의 "실제 화면 보기"가 함께 쓴다.
+export const liveRoutes = {
+  login: { href: "/login", label: "로그인 화면" },
+  dashboard: { href: "/dashboard", label: "대시보드 화면" },
+  // 존재하지 않는 경로로, 404 화면을 보여주기 위한 의도된 링크다.
+  notFound: { href: "/this-page-does-not-exist", label: "404 화면" },
+} as const;
+
 // 예제 등록: 새 예제는 파일을 만든 뒤 이 배열에 항목을 추가하면 된다.
 export const examples: ExampleMeta[] = [
   // 테마
@@ -378,7 +386,7 @@ export const examples: ExampleMeta[] = [
     title: "AuthShell",
     description: "인증 화면 공통 셸입니다. 전체 화면 레이아웃이라 실제 화면에서 확인합니다.",
     file: "components/layout/auth-shell.tsx",
-    liveHref: "/login",
+    liveHref: liveRoutes.login.href,
   },
   {
     id: "app-sidebar",
@@ -386,7 +394,7 @@ export const examples: ExampleMeta[] = [
     title: "AppSidebar",
     description: "대시보드 사이드바입니다. 전체 화면 레이아웃이라 실제 화면에서 확인합니다.",
     file: "components/layout/app-sidebar.tsx",
-    liveHref: "/dashboard",
+    liveHref: liveRoutes.dashboard.href,
   },
 
   // 훅·유틸

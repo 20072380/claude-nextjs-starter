@@ -31,13 +31,18 @@ export function LoginForm() {
     defaultValues: { email: "", password: "" },
   });
 
-  async function onSubmit(values: LoginValues) {
+  async function onSubmit() {
     try {
-      // TODO: 실제 인증 로직(Server Action 또는 API 호출)으로 교체한다.
-      console.info("로그인 요청", { email: values.email });
+      // TODO: 실제 인증 로직으로 교체한다. 예: onSubmit(values: LoginValues)로 값을 받아
+      // await signIn(values) (Server Action 또는 API 호출)
       toast.success("로그인 요청이 처리되었습니다. (데모)");
     } catch (error) {
       console.error("로그인 실패", error);
+      // 서버 에러는 폼 하단에 표시하고 토스트로도 알린다.
+      // 연동 후에는 인증 실패와 시스템 오류를 구분해 문구를 선택한다.
+      form.setError("root", {
+        message: "로그인을 처리하지 못했습니다. 입력 내용을 확인해 주세요.",
+      });
       toast.error("로그인에 실패했습니다. 잠시 후 다시 시도해 주세요.");
     }
   }
@@ -95,6 +100,9 @@ export function LoginForm() {
                 </Field>
               )}
             />
+            {form.formState.errors.root ? (
+              <FieldError errors={[form.formState.errors.root]} />
+            ) : null}
           </FieldGroup>
         </CardContent>
         <CardFooter className="flex-col gap-3">

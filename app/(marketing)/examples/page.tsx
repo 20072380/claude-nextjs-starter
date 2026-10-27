@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { categories } from "@/examples/categories";
-import { getExamplesByCategory } from "@/examples/registry";
+import { getExamplesByCategory, liveRoutes } from "@/examples/registry";
 
 export const metadata: Metadata = {
   title: "예제",
@@ -18,11 +18,7 @@ export const metadata: Metadata = {
 };
 
 // 실제 페이지로 확인할 수 있는 화면 목록
-const livePages = [
-  { href: "/login", label: "로그인 화면" },
-  { href: "/dashboard", label: "대시보드 화면" },
-  { href: "/this-page-does-not-exist", label: "404 화면" },
-];
+const livePages = Object.values(liveRoutes);
 
 // 예제 목차: 카테고리별 카드
 export default function ExamplesPage() {
@@ -67,6 +63,8 @@ export default function ExamplesPage() {
             <Link
               key={page.href}
               href={page.href}
+              // 404 링크는 존재하지 않는 경로라 프리패치하지 않는다.
+              prefetch={page.href === liveRoutes.notFound.href ? false : undefined}
               className={buttonVariants({ variant: "outline" })}
             >
               {page.label}
